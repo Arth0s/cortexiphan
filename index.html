@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>Cortexiphan</title><!-- ( {{ items.length }} ) -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Reklino/munkey-icons/master/munkey.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="includes/css/style.css">
+  </head>
+  <body>
+    <body ng-app="app" ng-controller="main">
+      <header>
+      <h1>Cortexiphan</h1>
+      </header>
+      <div class="menu">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Porque Cortexiphan?</a></li>
+        </ul>
+      </div>
+      <main>
+        <div class="ctrls">
+          <div class="filter">
+            <span class="m m-search"></span>
+            <input type="text" ng-model="searchies" ng-change="onQueryChange(searchies)" class="form-control" placeholder="Buscar">
+          </div>
+          <div class="grid-toggle">
+            <a ng-click="gridToggle = !gridToggle" ng-class="{ 'active' : gridToggle }">
+            <span class="m m-squares"></span>
+            <span class="m m-form"></span>
+            </a>
+          </div>
+        </div>
+        <div class="container">
+          <ul class="grid" ng-class="{ 'grid-list' : gridToggle, 'grid-thumb' : !gridToggle }">
+            <li class="grid-head">
+              <ul>
+                <li style="width:15%"><a ng-click="sort_by('img')">Capa</a></li>
+                <li style="width:55%"><a ng-click="sort_by('name')">Titulo</a></li>
+                <li style="width:30%"><a ng-click="sort_by('nomecanal')">Canal</a></li>
+              </ul>
+            </li>
+            <li class="grid-body animate-repeat" ng-repeat="item in pagedItems[currentPage - 1] | orderBy:sortingOrder:reverse" ng-class="{'last':$last}">
+              <ul>
+                <li>
+                  <span class="grid-title"><img src="{{item.img}}" style="width: 40px;border-radius: 50%;"></span>
+                </li>
+                <li>
+                  <span class="grid-user">
+                  <span class="grid-username"><a href="{{ item.urlplay }}">{{ item.name }}</a></span>
+                  </span>
+                </li>
+                <li>
+                  <span class="grid-options"><a href="{{ item.urlcanal }}">{{ item.nomecanal }}</a></span>
+                </li>
+              </ul>
+            </li>
+            <li class="clear-fix"></li>
+            <li class="pagination">
+              <pager total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()"></pager>
+              <p ng-if="itemsPerPage * currentPage < totalItems">
+              {{ itemsPerPage * currentPage - itemsPerPage + 1 }} - {{ totalItems }}
+              </p>
+              <p ng-if="itemsPerPage * currentPage >= totalItems">
+              {{ itemsPerPage * currentPage - itemsPerPage + 1 }} - {{ totalItems }}
+              </p>
+            </li>
+          </ul>
+        </div>
+      </main>
+      <footer class="footer"><small>Feito com <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg> por <a target="blank" href="https://github.com/andreyglauzer">Andrey Glauzer</a>, <a target="blank" rel="nofollow" href="https://github.com/andreyglauzer/Cortexiphan">Projeto open source</a> usando <a target="blank" rel="nofollow" href="http://jekyllrb.com/">Jekyll</a></small></footer>
+    </body>
+    <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular-animate.js'></script>
+    <script src="includes/js/index.js"></script>
+  </body>
+</html>
+<style type="text/css">
+div.menu{
+      width: 100%;
+    background: rgba(0, 0, 0, 0.77);
+    display: inline-block;
+}
+/**Set the parent <li>’s CSS position property to ‘relative’.
+**/
+div.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+div.menu ul li {
+  display: block;
+  position: relative;
+  float: left;
+}
+
+/**The CSS to hide the sub menus.**/
+div.menu li ul { display: none; }
+
+div.menu ul li a {
+  display: block;
+  padding: 1em;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #fff;
+}
+
+div.menu ul li a:hover { background: rgba(7, 7, 7, 0.25); }
+
+/**Displays the dropdown menu on hover.**/
+div.menu li:hover > ul {
+  display: block;
+  position: absolute;
+}
+
+div.menu li:hover li { float: none; }
+
+div.menu li:hover a { background: #1bc2a2; }
+
+div.menu li:hover li a:hover { background: #2c3e50; }
+
+
+/**Displays second level dropdown menus to the right of the first level dropdown menu.**/
+div.menu ul {
+    list-style: none;
+    padding: 0;
+    width: 70%;
+    margin: 0 auto;
+}
+
+
+</style>

@@ -1,0 +1,10 @@
+permalink:           Cortexiphan
+title:               Cortexiphan - Cursos
+tagline:             Essa página foi dessenvolvida com o intuito de juntas o máximo de cursos em uma só página.
+url:                 http://andreyglauzer.github.io
+baseurl:             /cortexiphan
+owner:
+  name:           Cortexiphan
+version:             2.0.0
+github:
+  repo:              
