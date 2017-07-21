@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import urllib.parse
+import urllib.parse, os
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
+os.system("rm -rf includes/js/index.js")
+os.system("touch includes/js/index.js")
 js = """angular.module("app",["ui.bootstrap","ngAnimate"]).factory("sortable",["$filter","$rootScope",function(e,r){return function(t,o,s,a){t.sortingOrder=a,t.reverse=!1,t.filteredItems=[],t.groupedItems=[],t.itemsPerPage=s,t.pagedItems=[],t.currentPage=1,t.items=o,t.maxSize=5;t.search=function(){t.filteredItems=e("filter")(t.items,r.query),""!==t.sortingOrder&&(t.filteredItems=e("orderBy")(t.filteredItems,t.sortingOrder,t.reverse)),t.currentPage=1,t.groupToPages(),t.totalItems=t.filteredItems.length},t.groupToPages=function(){t.pagedItems=[];for(var e=0;e<t.filteredItems.length;e++)e%t.itemsPerPage==0?t.pagedItems[Math.floor(e/t.itemsPerPage)]=[t.filteredItems[e]]:t.pagedItems[Math.floor(e/t.itemsPerPage)].push(t.filteredItems[e])},t.range=function(e,r){var t=[];r||(r=e,e=0);for(var o=e;o<r;o++)t.push(o);return t},t.search(),t.sort_by=function(e){t.sortingOrder==e&&(t.reverse=!t.reverse),t.sortingOrder=e,t.search()},t.sort_by(a),t.totalItems=t.filteredItems.length}}]).controller("main",["$scope","$rootScope","sortable",function(e,r,t){r.query="",e.gridToggle=!0,e.onQueryChange=function(t){r.query=t,e.search()},t(e,["""
 arquivo = open('includes/js/index.js', 'r', encoding="utf8")
 conteudo = arquivo.readlines()
@@ -61,8 +63,17 @@ def inicio():
              "Ruby", "Ruby on Rails", "Elixir", "Clojure", "Git", "PHPunit", "Composer", "Bower"
              "Redis", "PostgreSQL", "Be MEAN"]
 
-    for termos in categorias:
-        buscanoyoutube("curso de " + termos, termos)
+    try:
+        for termos in categorias:
+            buscanoyoutube("curso de " + termos, termos)
+    finally:
+        final = """{}],6,"updated_at")}]);"""
+        arquivo = open('includes/js/index.js', 'r', encoding="utf8")
+        conteudo = arquivo.readlines()
+        conteudo.append(final)
+        arquivo = open('includes/js/index.js', 'w', encoding="utf8")
+        arquivo.writelines(conteudo)
+        arquivo.close()
 try:
     if __name__ == "__main__":
         inicio()
